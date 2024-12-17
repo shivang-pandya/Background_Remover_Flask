@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'Login' if is_login else 'Register' }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+ 
+</head>
+<style>
+     body {
+            background-color: #1c1e21;
+            color: #fff;
+        }
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+            background-color: #333;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .toggle-btn {
+            width: 50%;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: #fff;
+        }
+        .social-icons a:hover {
+            color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .form-check-label, .forgot-password, .register-link {
+            color: #aaa;
+        }
+        .forgot-password:hover, .register-link:hover {
+            color: #007bff;
+            text-decoration: none;
+        }
+</style>
+<body>
+
+    <div class="container">
+        <h5 class="text-center">{{ 'Sign in with:' if is_login else 'Sign up with:' }}</h5>
+        <div class="social-icons d-flex justify-content-center mb-3">
+            <a href="#" class="fab fa-facebook-f fa-lg"></a>
+            <a href="#" class="fab fa-google fa-lg"></a>
+            <a href="#" class="fab fa-twitter fa-lg"></a>
+            <a href="#" class="fab fa-github fa-lg"></a>
+        </div>
+        
+        <div class="text-center my-2">or:</div>
+        
+        <!-- Login or Register Form -->
+        <form action="{{ url_for('login' if is_login else 'register') }}" method="POST">
+            {{ form.hidden_tag() }}
+            
+            {% if not is_login %}
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(class="form-control") }}
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class="form-control") }}
+            </div>
+
+            {% if not is_login %}
+            <div class="form-group">
+                {{ form.confirm_password.label }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+            {% endif %}
+            
+            <button type="submit" class="btn btn-primary btn-block mt-4">
+                {{ 'Sign In' if is_login else 'Register' }}
+            </button>
+        </form>
+        
+        <div class="text-center mt-3">
+            {% if is_login %}
+                <span>Not a member? <a href="{{ url_for('register') }}" class="register-link">Register</a></span>
+            {% else %}
+                <span>Already have an account? <a href="{{ url_for('login') }}">Login</a></span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
